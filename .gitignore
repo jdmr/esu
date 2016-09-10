@@ -1,0 +1,7 @@
+.DS_Store
+target
+nbactions.xml
+nb-configuration.xml
+application.yml
+.sass-cache
+/nbproject/
