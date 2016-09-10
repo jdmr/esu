@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="layouts/main :: head('Comparte: ' + ${tema.articulo.titulo}, ${tema.articulo.descripcion})">
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Inicio</title>
+        <meta name="description" content=""/>
+        <meta name="author" content="J. David Mendoza"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon"                    href="../../../static/img/favicon.ico" th:href="@{/static/img/favicon.ico}" type="image/x-icon" />
+        <link rel="apple-touch-icon" sizes="144x144" href="../../../static/img/apple-touch-icon-144x144.png" th:href="@{/static/img/apple-touch-icon-144x144.png}" />
+        <link rel="apple-touch-icon" sizes="114x114" href="../../../static/img/apple-touch-icon-114x114.png" th:href="@{/static/img/apple-touch-icon-114x114.png}" />
+        <link rel="apple-touch-icon" sizes="72x72"   href="../../../static/img/apple-touch-icon-72x72.png" th:href="@{/static/img/apple-touch-icon-72x72.png}" />
+        <link rel="apple-touch-icon"                 href="../../../static/img/apple-touch-icon.png" th:href="@{/static/img/apple-touch-icon.png}" />
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../../../static/css/main.css" th:href="@{/static/css/main.css}" />
+
+    </head>
+    <body>
+
+        <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="layouts/main :: navigation('comparte')">
+        </header>
+
+        <div class="container">
+
+            <div class="row" id="searchDiv" th:replace="layouts/main :: searchDiv">
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 th:utext="${tema.articulo.titulo}">Titulo Leccion</h1>
+                    <h3>Por <th:block th:text="${tema.articulo.autor.nombreCompleto}">Autor</th:block></h3>
+                    <th:block th:utext="${tema.articulo.contenido}">Texto de la leccion</th:block>
+                    <p><th:block th:text="${tema.articulo.vistas + ' Visitas'}">0 Visitas</th:block> <span class="fa fa-eye"></span></p>
+
+                    <div class="addthis_sharing_toolbox"></div>
+                    <div class="addthis_recommended_horizontal"></div>
+
+                    <div class="perfil" th:if="${perfil != null}">
+                        <h3>Acerca del Autor</h3>
+                        <a href="#" th:href="@{'/perfil/'+${perfil.id}}"><img src="#" th:src="@{'/perfil/imagen/'+${perfil.id}}" alt="#" th:alt="${tema.articulo.autor.nombreCompleto}" style="float:left;width: 200px;padding: 10px 10px 10px 0;" /></a>
+                        <a href="#" th:href="@{'/perfil/'+${perfil.id}}"><h2 th:text="${tema.articulo.autor.nombreCompleto}">Nombre</h2></a>
+                        <p th:text="${perfil.texto}">Descripcion</p>
+                        <a href="#" th:href="@{'/perfil/'+${perfil.id}}">Artículos de <th:block th:text="${tema.articulo.autor.nombreCompleto}">Autor</th:block></a>
+                    </div>
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript" th:inline="javascript">
+                        /*<![CDATA[*/
+                        var publicacionId = /*[[${tema.articulo.id}]]*/ 1;
+                        var title = /*[[${tema.articulo.titulo}]]*/ 'titulo';
+
+                        /* * * CONFIGURATION VARIABLES * * */
+                        var disqus_shortname = 'esuniversitaria';
+                        var disqus_identifier = publicacionId;
+                        var disqus_title = title;
+
+                        /* * * DON'T EDIT BELOW THIS LINE * * */
+                        (function () {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                        /*]]>*/
+                    </script>
+                    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                    <a href="http://disqus.com" class="dsq-brlink">comments powered by <div class="logo-disqus">Disqus</div></a>
+                    <div class="text-center" id="temaDiv">
+                        <span class="fa fa-spinner fa-spin"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <a href="#" th:href="@{${comparte.hoyLiga}}" th:unless="${comparte.esHoy}" class="btn btn-primary btn-lg btn-block btn-cta">Lección de Hoy</a>
+                    <th:block th:if="${comparte.publicacion != null}">
+                        <h2><a href="#" th:href="@{'/estudia/'+${comparte.anio}+'/'+${comparte.trimestre}+'/'+${comparte.leccion}+'/'+${comparte.dia}}" th:utext="${comparte.publicacion.articulo.titulo}">Leccion</a></h2>
+                        <h4 th:text="${comparte.hoyString}">Domingo 20/Jul/2014</h4>
+                        <p><th:block th:utext="${comparte.publicacion.articulo.descripcion}">Descripcion</th:block></p>
+                        <p><a href="#" th:href="@{'/estudia/'+${comparte.anio}+'/'+${comparte.trimestre}+'/'+${comparte.leccion}+'/'+${comparte.tema}}" class="btn btn-primary btn-lg btn-block btn-cta">Leer más...</a></p>
+                    </th:block>
+
+                    <th:block th:each="publicacion : ${comparte.articulos}">
+                        <th:block th:if="${publicacion.tipo == 'dialoga'}">
+                            <h2><a href="#" th:href="@{'/profundiza/'+${publicacion.anio}+'/'+${publicacion.trimestre}+'/'+${publicacion.leccion}+'/'+${publicacion.tema}}" th:utext="${publicacion.articulo.titulo}">Dialoga</a></h2>
+                            <h4>Por <th:block th:text="${publicacion.articulo.autor.nombreCompleto}">Autor</th:block></h4>
+                            <p><th:block th:utext="${publicacion.articulo.descripcion}">Descripcion</th:block></p>
+                            <p><a href="#" th:href="@{'/profundiza/'+${publicacion.anio}+'/'+${publicacion.trimestre}+'/'+${publicacion.leccion}+'/'+${publicacion.tema}}" class="btn btn-primary btn-lg btn-block btn-cta">Leer más...</a></p>
+                        </th:block>
+                        <th:block th:if="${publicacion.tipo == 'comunica'}">
+                            <h2><a href="#" th:href="@{'/comparte/'+${publicacion.anio}+'/'+${publicacion.trimestre}+'/'+${publicacion.leccion}+'/'+${publicacion.tema}}" th:utext="${publicacion.articulo.titulo}">Comunica</a></h2>
+                            <h4>Por <th:block th:text="${publicacion.articulo.autor.nombreCompleto}">Autor</th:block></h4>
+                            <p><th:block th:utext="${publicacion.articulo.descripcion}">Descripcion</th:block></p>
+                            <p><a href="#" th:href="@{'/comparte/'+${publicacion.anio}+'/'+${publicacion.trimestre}+'/'+${publicacion.leccion}+'/'+${publicacion.tema}}" class="btn btn-primary btn-lg btn-block btn-cta">Leer más...</a></p>
+                        </th:block>
+                        <th:block th:if="${publicacion.tipo == 'leccion'}">
+                            <h2><a href="#" th:href="@{'/estudia/'+${publicacion.anio}+'/'+${publicacion.trimestre}+'/'+${publicacion.leccion}+'/'+${publicacion.dia}}" th:utext="${publicacion.articulo.titulo}">Leccion</a></h2>
+                            <p><th:block th:utext="${publicacion.articulo.descripcion}">Descripcion</th:block></p>
+                            <p><a href="#" th:href="@{'/estudia/'+${publicacion.anio}+'/'+${publicacion.trimestre}+'/'+${publicacion.leccion}+'/'+${publicacion.dia}}" class="btn btn-primary btn-lg btn-block btn-cta">Leer más...</a></p>
+                        </th:block>
+                    </th:block>
+
+                    <div id="articulosDiv" class="text-center">
+                        <span class="fa fa-spinner fa-spin"></span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <footer role="contentinfo" th:replace="layouts/main :: footer">
+        </footer>
+
+        <div th:replace="layouts/main :: scripts" th:remove="tag">
+            <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+            <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+            <script src="../../../static/js/main.js" th:src="@{/static/js/main.js}"></script>
+        </div>
+        <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        "use strict";
+                        var popularesUrl = /*[[@{/populares}]]*/ '/populares';
+                        var profundizaUrl = /*[[@{/profundiza}]]*/ '/profundiza';
+                        var comparteUrl = /*[[@{/comparte}]]*/ '/comparte';
+                        var estudiaUrl = /*[[@{/estudia}]]*/ '/estudia';
+                        var perfilUrl = /*[[@{/perfil}]]*/ '/perfil';
+                        var compartePopularUrl = /*[[@{/comparte/popular}]]*/ '/comparte/popular';
+                        var posicion = 0;
+                        var actual = -1;
+                        var page = 1;
+                        var actualPage = 0;
+                        var articulos = [];
+                        articulos.push(/*[[${tema.articulo.id}]]*/);
+
+                        function isScrolledIntoView(elem) {
+                            var $elem = $(elem);
+                            var $window = $(window);
+
+                            var docViewTop = $window.scrollTop();
+                            var docViewBottom = docViewTop + $window.height();
+
+                            var elemTop = $elem.offset().top;
+                            var elemBottom = elemTop + $elem.height();
+
+                            return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+                        }
+
+                        function contains(a, obj) {
+                            for (var i = 0; i < a.length; i++) {
+                                if (a[i] === obj) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+
+                        $(window).scroll(function () {
+
+                            if (isScrolledIntoView($("div#temaDiv"))) {
+                                if (posicion !== actual) {
+                                    console.log('Buscando popular de comparte(' + posicion + ')');
+                                    actual = posicion;
+                                    $.get(compartePopularUrl + '/' + posicion, function (data) {
+                                        if (!contains(articulos, data.publicacion.articulo.id)) {
+                                            document.title = 'Comparte: ' + data.publicacion.articulo.titulo + ' - ESU';
+                                            var html = "<h1>" + data.publicacion.articulo.titulo + "</h1>";
+                                            html += "<h3>Por " + data.publicacion.articulo.autor.nombreCompleto + "</h3>";
+                                            html += data.publicacion.articulo.contenido;
+                                            html += "<p>" + data.publicacion.articulo.vistas + " Vistas <span class='fa fa-eye'></span></p>";
+                                            html += "<div>";
+                                            html += "<h3>Acerca del Autor</h3>";
+                                            html += "<a href='" + perfilUrl + "/" + data.perfil.id + "'><img src='" + perfilUrl + "/imagen/" + data.perfil.id + "' alt='" + data.publicacion.articulo.autor.nombreCompleto + "' style='float:left;width:200px;padding: 10px 10px 10px 0;'/></a>";
+                                            html += "<a href='" + perfilUrl + "/" + data.perfil.id + "'><h2>" + data.publicacion.articulo.autor.nombreCompleto + "</h2></a>";
+                                            if (data.perfil.texto) {
+                                                html += "<p>" + data.perfil.texto + "</p>";
+                                                html += "<p style='padding-bottom: 20px;'><a href='" + perfilUrl + "/" + data.perfil.id + "' >Art&iacute;culos de " + data.publicacion.articulo.autor.nombreCompleto + "</a></p>";
+                                            } else {
+                                                html += "<p style='padding-bottom: 100px;'><a href='" + perfilUrl + "/" + data.perfil.id + "' >Art&iacute;culos de " + data.publicacion.articulo.autor.nombreCompleto + "</a></p>";
+                                            }
+                                            html += "<hr/>";
+                                            html += "</div>";
+                                            $('div#temaDiv').before(html);
+                                            //articulos.push(data.publicacion.articulo.id);
+                                        }
+                                        posicion = data.posicion;
+                                    });
+                                }
+                            }
+
+                            if (isScrolledIntoView($("div#articulosDiv"))) {
+                                if (page !== actualPage) {
+                                    console.log("Getting data(" + page + ")");
+                                    var div = $('div#articulosDiv');
+                                    actualPage = page;
+                                    $.get(popularesUrl, {"page": page}, function (data) {
+                                        $.each(data, function (i, publicacion) {
+                                            if (publicacion.tipo === 'dialoga') {
+                                                var html = "<h1><a href='" + profundizaUrl + "/" + publicacion.anio + "/" + publicacion.trimestre + "/" + publicacion.leccion + "/" + publicacion.tema + "'>" + publicacion.articulo.titulo + "</a></h1>";
+                                                html += "<h3>Por " + publicacion.articulo.autor.nombreCompleto + "</h3>";
+                                                html += "<p>" + publicacion.articulo.descripcion + "</p>";
+                                                html += "<p><a href='" + profundizaUrl + "/" + publicacion.anio + "/" + publicacion.trimestre + "/" + publicacion.leccion + "/" + publicacion.tema + "' class='btn btn-primary btn-lg btn-block btn-cta'>Leer m&aacute;s...</a></p>";
+                                                div.before(html);
+                                            } else if (publicacion.tipo === 'comunica') {
+                                                var html = "<h1><a href='" + comparteUrl + "/" + publicacion.anio + "/" + publicacion.trimestre + "/" + publicacion.leccion + "/" + publicacion.tema + "'>" + publicacion.articulo.titulo + "</a></h1>";
+                                                html += "<h3>Por " + publicacion.articulo.autor.nombreCompleto + "</h3>";
+                                                html += "<p>" + publicacion.articulo.descripcion + "</p>";
+                                                html += "<p><a href='" + comparteUrl + "/" + publicacion.anio + "/" + publicacion.trimestre + "/" + publicacion.leccion + "/" + publicacion.tema + "' class='btn btn-primary btn-lg btn-block btn-cta'>Leer m&aacute;s...</a></p>";
+                                                div.before(html);
+                                            } else if (publicacion.tipo === 'leccion') {
+                                                var html = "<h1><a href='" + estudiaUrl + "/" + publicacion.anio + "/" + publicacion.trimestre + "/" + publicacion.leccion + "/" + publicacion.dia + "'>" + publicacion.articulo.titulo + "</a></h1>";
+                                                html += "<p>" + publicacion.articulo.descripcion + "</p>";
+                                                html += "<p><a href='" + estudiaUrl + "/" + publicacion.anio + "/" + publicacion.trimestre + "/" + publicacion.leccion + "/" + publicacion.dia + "' class='btn btn-primary btn-lg btn-block btn-cta'>Leer m&aacute;s...</a></p>";
+                                                div.before(html);
+                                            }
+                                        });
+                                        page++;
+                                    });
+
+                                }
+                            }
+
+                        });
+                        /*]]>*/
+        </script> 
+    </body>
+</html>

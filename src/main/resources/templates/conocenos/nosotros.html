@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="layouts/main :: head('Conócenos: Acerca de ESU', 'Acerca de Escuela Sabática Univeristaria')">
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Inicio</title>
+        <meta name="description" content=""/>
+        <meta name="author" content="J. David Mendoza"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon"                    href="../../../static/img/favicon.ico" th:href="@{/static/img/favicon.ico}" type="image/x-icon" />
+        <link rel="apple-touch-icon" sizes="144x144" href="../../../static/img/apple-touch-icon-144x144.png" th:href="@{/static/img/apple-touch-icon-144x144.png}" />
+        <link rel="apple-touch-icon" sizes="114x114" href="../../../static/img/apple-touch-icon-114x114.png" th:href="@{/static/img/apple-touch-icon-114x114.png}" />
+        <link rel="apple-touch-icon" sizes="72x72"   href="../../../static/img/apple-touch-icon-72x72.png" th:href="@{/static/img/apple-touch-icon-72x72.png}" />
+        <link rel="apple-touch-icon"                 href="../../../static/img/apple-touch-icon.png" th:href="@{/static/img/apple-touch-icon.png}" />
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../../../static/css/main.css" th:href="@{/static/css/main.css}" />
+
+    </head>
+    <body>
+
+        <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="layouts/main :: navigation('conocenos')">
+        </header>
+
+        <div class="container">
+
+            <div class="row" id="searchDiv" th:replace="layouts/main :: searchDiv">
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="nav esu-sidenav">
+                        <li class="active"><a href="/conocenos/nosotros">Acerca de Nosotros</a></li>
+                        <li><a href="/conocenos/equipo">Equipo</a></li>
+                        <li><a href="/conocenos/contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-9">
+                    <h1>Acerca de Nosotros</h1>
+                    <p>"EscuelaSabáticaUniversitaria.org" (ESU) aprovecha las nuevas tecnologías de la información para la propagación del evangelio. Se trata de un sitio web dirigido especialmente a <em>estudiantes universitarios</em> y <em>jóvenes profesionales</em> que provee recursos de información en un ambiente de interpretación confiable, ideas frescas para comunicar el evangelio, y una comunidad atractiva y amena. Todo esto gira en torno al estudio de la lección de la Escuela Sabática.</p>
+                    <h1>Misión</h1>
+                    <p>La Escuela Sabática Universitaria es una organización basada en la web, que ministra en favor de estudiantes universitarios y profesionales jóvenes, proveyendo recursos con información confiable, socios con interpretaciones correctas, y una comunidad amena de estudiantes, que tiene el fin de desafiar a sus usuarios a comunicar la verdad en amor, y así, transformar su mundo.</p>
+                    <h1>Visión</h1>
+                    <p>Nuestra visión es desafiar a los estudiantes universitarios y profesionales jóvenes a estudiar la palabra de Dios en profundidad para que luego cambien su mundo. Para esto proveeremos un espacio de calidad en la web, en donde ellos se puedan reunir para pensar, dialogar, interactuar, y compartir el estudio de las lecciones de Escuela Sabática.</p>
+                    <p>Esta visión expresa el punto central de nuestra determinación como organización, que es nuestro deseo de desafiar a los usuarios de nuestro sitio web a profundizar en la palabra de Dios y actuar de forma acorde.</p>
+                    <p>Por lo tanto, nuestro MOTTO es: <strong>"Profundiza en la palabra… Cambia tu mundo"</strong> (Inglés: <strong>“Think deep on the Word… Transform your world”</strong>).</p>
+                </div>
+            </div>
+        </div>
+
+        <footer role="contentinfo" th:replace="layouts/main :: footer">
+        </footer>
+
+        <div th:replace="layouts/main :: scripts" th:remove="tag">
+            <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+            <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+            <script src="../../../static/js/main.js" th:src="@{/static/js/main.js}"></script>
+        </div>
+    </body>
+</html>
