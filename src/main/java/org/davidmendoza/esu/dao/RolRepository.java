@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 J. David Mendoza.
+ * Copyright 2016 Universidad de Montemorelos.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,14 @@
  */
 package org.davidmendoza.esu.dao;
 
-import java.util.List;
-import org.davidmendoza.esu.shared.Usuario;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.davidmendoza.esu.shared.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-
-    public Usuario findByUsernameIgnoreCase(String username);
+public interface RolRepository extends JpaRepository<Rol, Long> {
     
-    public Page<Usuario> findByUsernameLikeOrNombreLikeOrApellidoLikeAllIgnoreCase(String username, String nombre, String apellido, Pageable pageable);
-    
-    @Query("select u from Usuario u where upper(u.nombre) like :filtro or upper(u.apellido) like :filtro order by u.nombre, u.apellido")
-    public List<Usuario> busca(@Param("filtro")String filtro);
-    
-    @Query("select new Usuario( u.password, u.dateCreated ) from Usuario u where u.id = :usuarioId")
-    public Usuario dateCreated(@Param("usuarioId") Long usuarioId);
-    
+    public Rol findByAuthority(String authority);
 }
