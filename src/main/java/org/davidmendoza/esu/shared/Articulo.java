@@ -38,6 +38,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  *
@@ -45,6 +48,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "articulos")
+@Indexed
 public class Articulo {
 
     @Id
@@ -57,6 +61,7 @@ public class Articulo {
     @Column(name = "version", nullable = false)
     @JsonIgnore
     private long version;
+    @Field
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1000000)
@@ -68,6 +73,7 @@ public class Articulo {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonIgnore
     private Date dateCreated;
+    @Field
     @Size(max = 10000)
     @Column(name = "descripcion", length = 10000)
     private String descripcion;
@@ -77,6 +83,7 @@ public class Articulo {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonIgnore
     private Date lastUpdated;
+    @Field
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -86,6 +93,7 @@ public class Articulo {
     @NotNull
     @Column(name = "vistas", nullable = false)
     private Integer vistas;
+    @IndexedEmbedded
     @JoinColumn(name = "autor_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Usuario autor;

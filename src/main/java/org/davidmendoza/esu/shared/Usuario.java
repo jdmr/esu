@@ -47,6 +47,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.search.annotations.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -79,6 +80,7 @@ public class Usuario implements UserDetails {
     @Column(name = "account_locked", nullable = false)
     @JsonIgnore
     private Boolean accountLocked = false;
+    @Field
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -106,6 +108,7 @@ public class Usuario implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonIgnore
     private Date lastUpdated;
+    @Field
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -127,6 +130,7 @@ public class Usuario implements UserDetails {
     @Column(name = "publicaciones", nullable = false)
     @JsonIgnore
     private Integer totalPublicaciones = 0;
+    @Field
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
