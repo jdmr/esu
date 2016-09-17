@@ -45,6 +45,9 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
+ * 
+ * Basado en http://hibernate.org/search/documentation/getting-started/
+ * 
  */
 @Entity
 @Table(name = "articulos")
