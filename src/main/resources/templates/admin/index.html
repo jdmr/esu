@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head th:include="layouts/admin :: head('Search', 'Construyendo índices')">
+    <head th:include="layouts/admin :: head('Admin', 'Admin')">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>Inicio</title>
@@ -32,18 +32,15 @@
     </head>
     <body>
 
-        <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="layouts/admin :: navigation('indices')">
+        <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="layouts/admin :: navigation('admin')">
         </header>
 
         <div class="container">
 
             <div class="row">
                 <div class="col-md-12" style="height: 400px;">
-                    <h1>&Iacute;ndices</h1>
+                    <h1>Admin</h1>
                     
-                    <div class="alert alert-success">
-                        <h1>Terminó de construir índices.</h1>
-                    </div>
                 </div>
             </div>
         </div>
