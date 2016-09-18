@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head th:include="layouts/admin :: head('Trimestres', 'Lista de trimestres')">
+    <head th:include="layouts/admin :: head('Nuevo Trimestre', 'Nuevo Trimestre')">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>Inicio</title>
@@ -39,40 +39,41 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Trimestres</h1>
-                    
-                    <a href="#" th:href="@{/admin/trimestres/nuevo}" class="btn btn-primary btn-lg"><span class="fa fa-plus"></span> Trimestre</a>
-                    
-                    <div th:if="${mensaje != null}" class="alert" th:classappend="${mensajeEstilo != null} ? ${mensajeEstilo} : 'alert-success'" style="margin-top: 10px;">
-                        <h2 th:text="${mensaje}">Mensaje</h2>
-                    </div>
+                    <h1>Nuevo Trimestre</h1>
 
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Inicia</th>
-                                    <th>Termina</th>
-                                    <th class="text-center">Publicado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="trimestre : ${trimestres}">
-                                    <td><a href="#" th:href="@{'/admin/trimestres/editar/'+${trimestre.id}}" th:text="${trimestre.nombre}">Nombre</a></td>
-                                    <td th:text="${trimestre.inicia}">Inicia</td>
-                                    <td th:text="${trimestre.termina}">Termina</td>
-                                    <td class="text-center"><input type="checkbox" th:checked="${trimestre.publicado}" disabled="disabled" /></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <nav aria-label="...">
-                        <ul class="pager" >
-                            <li th:classappend="${pagina > 0}? '' : 'disabled'" ><a href="#" th:href="@{'/admin/trimestres?pagina='+${pagina-1}}">Anterior</a></li>
-                            <li><a href="#" th:href="@{'/admin/trimestres?pagina='+${pagina+1}}">Siguiente</a></li>
-                        </ul>
-                    </nav>
+                    <form action="#" th:action="@{/admin/trimestres/editar}" method="POST" th:object="${trimestre}">
+                        <input type="hidden" th:field="*{id}" />
+                        <input type="hidden" th:field="*{version}" />
+                        <div class="row">
+                            <div class="col-md-6 form-group" th:classappend="${#fields.hasErrors('nombre')}?'has-error'">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" th:field="*{nombre}" id="nombre" class="form-control" autofocus="autofocus"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group" th:classappend="${#fields.hasErrors('inicia')}?'has-error'">
+                                <label for="inicia">Inicia</label>
+                                <input type="text" th:field="*{inicia}" id="inicia" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group" th:classappend="${#fields.hasErrors('termina')}?'has-error'">
+                                <label for="termina">Termina</label>
+                                <input type="text" th:field="*{termina}" id="termina" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 checkbox" th:classappend="${#fields.hasErrors('publicado')}?'has-error'">
+                                <label>
+                                    <input type="checkbox" th:field="*{publicado}" id="publicado" />
+                                    Publicado?
+                                </label>                                
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-plus"></span> Crear</button>
+                        <a href="#" onclick="javascript:history.back();" class="btn btn-default btn-lg"><span class="fa fa-undo"></span> Cancelar</a>
+                    </form>
                 </div>
             </div>
         </div>

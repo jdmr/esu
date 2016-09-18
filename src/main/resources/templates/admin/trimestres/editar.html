@@ -45,25 +45,25 @@
                         <input type="hidden" th:field="*{id}" />
                         <input type="hidden" th:field="*{version}" />
                         <div class="row">
-                            <div class="col-md-6 form-group"th:classappend="${#fields.hasErrors('nombre')}?'has-error'">
+                            <div class="col-md-6 form-group" th:classappend="${#fields.hasErrors('nombre')}?'has-error'">
                                 <label for="nombre">Nombre</label>
                                 <input type="text" th:field="*{nombre}" id="nombre" class="form-control" autofocus="autofocus"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 form-group"th:classappend="${#fields.hasErrors('inicia')}?'has-error'">
+                            <div class="col-md-6 form-group" th:classappend="${#fields.hasErrors('inicia')}?'has-error'">
                                 <label for="inicia">Inicia</label>
                                 <input type="text" th:field="*{inicia}" id="inicia" class="form-control" />
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 form-group"th:classappend="${#fields.hasErrors('termina')}?'has-error'">
+                            <div class="col-md-6 form-group" th:classappend="${#fields.hasErrors('termina')}?'has-error'">
                                 <label for="termina">Termina</label>
                                 <input type="text" th:field="*{termina}" id="termina" class="form-control" />
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 checkbox"th:classappend="${#fields.hasErrors('publicado')}?'has-error'">
+                            <div class="col-md-6 checkbox" th:classappend="${#fields.hasErrors('publicado')}?'has-error'">
                                 <label>
                                     <input type="checkbox" th:field="*{publicado}" id="publicado" />
                                     Publicado?
@@ -71,8 +71,12 @@
                             </div>
                         </div>
 
-                        <a href="#" onclick="javascript:history.back();" class="btn btn-default btn-lg"><span class="fa fa-undo"></span> Cancelar</a>
                         <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-edit"></span> Actualizar</button>
+                        <a href="#" onclick="javascript:history.back();" class="btn btn-default btn-lg"><span class="fa fa-undo"></span> Cancelar</a>
+                        
+                        <a href="#" th:href="@{'/admin/trimestres/eliminar/'+${trimestre.id}}" class="btn btn-danger btn-lg pull-right" onclick="return confirm('¿Seguro de que desea eliminar este trimestre?');">
+                            <span class="fa fa-trash-o"></span> Eliminar
+                        </a>
                     </form>
                 </div>
             </div>

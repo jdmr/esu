@@ -23,6 +23,8 @@
  */
 package org.davidmendoza.esu.shared;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import org.davidmendoza.esu.dao.TrimestreRepository;
 import org.slf4j.Logger;
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TrimestreService {
 
     private static final Logger log = LoggerFactory.getLogger(TrimestreService.class);
-    
+
     @Autowired
     private TrimestreRepository trimestreRepository;
 
@@ -50,21 +53,65 @@ public class TrimestreService {
     public Trimestre obtiene(Date fecha) {
         return trimestreRepository.obtiene(fecha);
     }
-    
+
     @Transactional(readOnly = true)
     public Trimestre obtiene(String nombre) {
         log.debug("Buscando trimestre: " + nombre);
         return trimestreRepository.buscaPorNombre(nombre);
     }
-    
+
     @Transactional(readOnly = true)
     public Page<Trimestre> trimestres(PageRequest pr) {
         return trimestreRepository.findAll(pr);
     }
-    
+
     @Transactional(readOnly = true)
     public Trimestre obtiene(Long trimestreId) {
         return trimestreRepository.findOne(trimestreId);
     }
-    
+
+    public Trimestre crea(Trimestre trimestre) {
+        return trimestreRepository.save(trimestre);
+    }
+
+    public Trimestre actualiza(Trimestre trimestre) {
+        return trimestreRepository.save(trimestre);
+    }
+
+    public Trimestre nuevo() {
+        Trimestre trimestre = new Trimestre();
+        Sort sort = new Sort(Sort.Direction.DESC, "inicia");
+        PageRequest pr = new PageRequest(0, 1, sort);
+        Page<Trimestre> ultimos = trimestreRepository.findAll(pr);
+        Trimestre ultimo = ultimos.iterator().next();
+        trimestre.setInicia(ultimo.getTermina());
+
+        LocalDate date = trimestre.getInicia().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String t = "" + date.getYear();
+        switch (date.getMonthValue()) {
+            case 12:
+                t = (date.getYear() + 1) + "t1";
+                break;
+            case 3:
+                t += "t2";
+                break;
+            case 6:
+                t += "t3";
+                break;
+            case 9:
+                t += "t4";
+        }
+        trimestre.setNombre(t);
+
+        LocalDate termina = date.plusWeeks(13);
+        trimestre.setTermina(Date.from(termina.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        trimestre.setPublicado(Boolean.TRUE);
+
+        return trimestre;
+    }
+
+    public void elimina(Trimestre trimestre) {
+        trimestreRepository.delete(trimestre);
+    }
+
 }

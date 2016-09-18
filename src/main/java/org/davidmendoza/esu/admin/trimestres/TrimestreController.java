@@ -23,6 +23,8 @@
  */
 package org.davidmendoza.esu.admin.trimestres;
 
+import javax.validation.Valid;
+import org.davidmendoza.esu.shared.Trimestre;
 import org.davidmendoza.esu.shared.TrimestreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +33,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -45,7 +50,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TrimestreController {
 
     private static final Logger log = LoggerFactory.getLogger(TrimestreController.class);
-    
+
     @Autowired
     private TrimestreService service;
 
@@ -65,5 +70,39 @@ public class TrimestreController {
     public String editar(@PathVariable Long trimestreId, Model model) {
         model.addAttribute("trimestre", service.obtiene(trimestreId));
         return "admin/trimestres/editar";
+    }
+
+    @PostMapping("/editar")
+    public String actualizar(Model model, @Valid Trimestre trimestre, Errors errors, RedirectAttributes redirectAttributes) {
+        if (errors.hasErrors()) {
+            log.warn("No se pudo actualizar el trimestre. {}", errors.getAllErrors());
+            return "admin/trimestes/editar";
+        }
+        try {
+            service.actualiza(trimestre);
+            redirectAttributes.addFlashAttribute("mensaje", "Se actualizó el trimestre " + trimestre.getNombre() + ".");
+            redirectAttributes.addFlashAttribute("mensajeEstilo", "alert-success");
+            return "redirect:/admin/trimestres";
+        } catch (Exception e) {
+            log.error("No se pudo actualizar el trimestre.", e);
+        }
+        return "admin/trimestes/editar";
+    }
+    
+    @GetMapping("/nuevo")
+    public String nuevo(Model model) {
+        Trimestre trimestre = service.nuevo();
+        model.addAttribute("trimestre", trimestre);
+        return "admin/trimestres/nuevo";
+    }
+    
+    @GetMapping("/eliminar/{trimestreId}")
+    public String eliminar(@PathVariable Long trimestreId, Model model, RedirectAttributes redirectAttributes) {
+        Trimestre trimestre = service.obtiene(trimestreId);
+        if (trimestre != null) {
+            service.elimina(trimestre);
+            redirectAttributes.addFlashAttribute("mensaje", "Se ha eliminado el trimestre "+trimestre.getNombre()+".");
+        }
+        return "redirect:/admin/trimestres";
     }
 }
