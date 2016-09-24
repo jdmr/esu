@@ -36,6 +36,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.search.annotations.Field;
@@ -100,6 +101,8 @@ public class Articulo {
     @JoinColumn(name = "autor_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Usuario autor;
+    @Transient
+    private Publicacion publicacion;
 
     public Articulo() {
     }
@@ -221,6 +224,20 @@ public class Articulo {
     @Override
     public String toString() {
         return "org.davidmendoza.esu.model.Articulo[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the publicacion
+     */
+    public Publicacion getPublicacion() {
+        return publicacion;
+    }
+
+    /**
+     * @param publicacion the publicacion to set
+     */
+    public void setPublicacion(Publicacion publicacion) {
+        this.publicacion = publicacion;
     }
 
 }

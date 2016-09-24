@@ -26,6 +26,7 @@ package org.davidmendoza.esu.dao;
 import java.util.Collection;
 import java.util.List;
 import org.davidmendoza.esu.shared.Publicacion;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -41,5 +42,7 @@ public interface PublicacionRepository extends JpaRepository<Publicacion, Long> 
     public List<Publicacion> findByEstatusAndArticuloAutorIdOrderByDateCreated(String estatus, Long articuloAutorId);
 
     public List<Publicacion> findByEstatusAndArticuloAutorIdAndTipoInOrderByDateCreated(String estatus, Long articuloAutorId, Collection<String> tipos);
+    
+    public List<Publicacion> findByEstatusAndArticuloId(String estatus, Long articuloId, Pageable pgbl);
 
 }
