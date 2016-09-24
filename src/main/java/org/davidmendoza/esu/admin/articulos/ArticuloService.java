@@ -48,7 +48,8 @@ public class ArticuloService {
     @Autowired
     private PublicacionRepository publicacionRepository;
 
-    Page<Articulo> articulos(PageRequest pr) {
+    @Transactional(readOnly = true)
+    Page<Articulo> lista(PageRequest pr) {
         Page<Articulo> articulos = repository.findAll(pr);
         for (Articulo articulo : articulos) {
             articulo.setDescripcion(StringUtils.abbreviate(articulo.getDescripcion(), 100));
@@ -60,7 +61,7 @@ public class ArticuloService {
                 articulo.setPublicacion(new Publicacion());
             }
         }
-        return repository.findAll(pr);
+        return articulos;
     }
 
 }

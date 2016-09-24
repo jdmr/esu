@@ -155,6 +155,9 @@ public class Usuario implements UserDetails {
     @Transient
     @JsonIgnore
     private Boolean user = true;
+    @Transient
+    @JsonIgnore
+    private Perfil perfil;
 
     public Usuario() {
     }
@@ -499,6 +502,20 @@ public class Usuario implements UserDetails {
      */
     public void setUser(Boolean user) {
         this.user = user;
+    }
+
+    /**
+     * @return the perfil
+     */
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    /**
+     * @param perfil the perfil to set
+     */
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
 }

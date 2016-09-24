@@ -21,43 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.admin.articulos;
+package org.davidmendoza.esu.admin.usuarios;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.davidmendoza.esu.dao.PerfilRepository;
+import org.davidmendoza.esu.dao.UsuarioRepository;
+import org.davidmendoza.esu.shared.Perfil;
+import org.davidmendoza.esu.shared.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-@Controller
-@RequestMapping("/admin/articulos")
-public class ArticuloController {
-    
-    private static final Logger log = LoggerFactory.getLogger(ArticuloController.class);
-    
+@Service
+@Transactional
+public class UsuarioService {
+
     @Autowired
-    private ArticuloService service;
-    
-    @GetMapping
-    public String lista(@RequestParam(required = false) Integer pagina, Model model) {
-        log.info("Lista de articulos");
-        pagina = (pagina != null && pagina >= 0) ? pagina : 0;
-        log.debug("Agregando pagina: {}", pagina);
-        model.addAttribute("pagina", pagina);
-        
-        Sort sort = new Sort(Sort.Direction.DESC, "lastUpdated");
-        PageRequest pr = new PageRequest(pagina, 10, sort);
-        model.addAttribute("articulos", service.lista(pr));
-        
-        return "admin/articulos/lista";
+    UsuarioRepository repository;
+    @Autowired
+    PerfilRepository perfilRepository;
+
+    Page<Usuario> lista(PageRequest pr) {
+        Page<Usuario> usuarios = repository.findAll(pr);
+        for (Usuario usuario : usuarios) {
+            Perfil perfil = perfilRepository.findByUsuario(usuario);
+            if (perfil != null) {
+                usuario.setPerfil(perfil);
+            } else {
+                usuario.setPerfil(new Perfil());
+            }
+        }
+        return usuarios;
     }
+
 }

@@ -21,10 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.admin.articulos;
+package org.davidmendoza.esu.admin.usuarios;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -39,25 +37,21 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
 @Controller
-@RequestMapping("/admin/articulos")
-public class ArticuloController {
-    
-    private static final Logger log = LoggerFactory.getLogger(ArticuloController.class);
-    
+@RequestMapping("/admin/usuarios")
+public class UsuarioController {
+
     @Autowired
-    private ArticuloService service;
-    
+    private UsuarioService service;
+
     @GetMapping
     public String lista(@RequestParam(required = false) Integer pagina, Model model) {
-        log.info("Lista de articulos");
         pagina = (pagina != null && pagina >= 0) ? pagina : 0;
-        log.debug("Agregando pagina: {}", pagina);
         model.addAttribute("pagina", pagina);
-        
-        Sort sort = new Sort(Sort.Direction.DESC, "lastUpdated");
+
+        Sort sort = new Sort("apellido");
         PageRequest pr = new PageRequest(pagina, 10, sort);
-        model.addAttribute("articulos", service.lista(pr));
-        
-        return "admin/articulos/lista";
+        model.addAttribute("usuarios", service.lista(pr));
+
+        return "admin/usuarios/lista";
     }
 }
