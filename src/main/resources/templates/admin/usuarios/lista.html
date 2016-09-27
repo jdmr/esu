@@ -56,6 +56,7 @@
                                     <th>Nombre</th>
                                     <th>Usuario</th>
                                     <th>Perfil</th>
+                                    <th>Roles</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,6 +70,11 @@
                                     <td th:text="${usuario.nombre}">Nombre</td>
                                     <td th:text="${usuario.username}">Usuario</td>
                                     <td th:text="${usuario.perfil.texto}">Usuario</td>
+                                    <td>
+                                        <ul th:if="${usuario.roles}">
+                                            <li th:each="rol : ${usuario.roles}" th:text="${rol.authority}">Admin</li>
+                                        </ul>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

@@ -82,19 +82,56 @@ public class UsuarioController {
         perfilValidator.validate(perfil, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("No se pudo actualizar usuario. {}", bindingResult.getAllErrors());
-            return "admin/usuario/editar";
+            return "admin/usuarios/editar";
         }
-        Usuario usuario = perfil.getUsuario();
 
         try {
             perfilService.actualiza(perfil);
         } catch (Exception e) {
             log.error("No se pudo actualizar usuario", e);
             bindingResult.reject("No se pudo actualizar usuario. {}", e.getMessage());
-            return "admin/usuario/editar";
+            return "admin/usuarios/editar";
         }
-        return "redirect:/admin/usuario/ver/" + usuario.getId();
+        return "redirect:/admin/usuarios";
+    }
+    
+    @GetMapping("/nuevo")
+    public String nuevo(Model model) {
+        Perfil perfil = new Perfil();
+        perfil.setUsuario(new Usuario());
+        model.addAttribute("perfil", perfil);
+        
+        return "admin/usuarios/nuevo";
     }
 
+    @PostMapping("/nuevo")
+    public String nuevo(@ModelAttribute("perfil") Perfil perfil, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        perfilValidator.validate(perfil, bindingResult);
+        if (bindingResult.hasErrors()) {
+            log.warn("El usuario no se pudo crear. {}", bindingResult.getAllErrors());
+            return "admin/usuarios/nuevo";
+        }
+
+        try {
+            perfilService.crea(perfil);
+        } catch (Exception e) {
+            log.error("El usuario no se pudo crear", e);
+            bindingResult.reject("El usuario no se pudo crear. {}", e.getMessage());
+            return "admin/usuarios/nuevo";
+        }
+        return "redirect:/admin/usuarios";
+    }
     
+    @GetMapping("/eliminar/{perfilId}")
+    public String eliminar(@PathVariable Long perfilId, RedirectAttributes redirectAttributes, Model model) {
+        try {
+            perfilService.elimina(perfilId);
+            redirectAttributes.addFlashAttribute("mensaje","El usuario ha sido dado de baja.");
+        } catch (Exception e) {
+            log.error("El usuario no se pudo eliminar", e);
+            redirectAttributes.addFlashAttribute("mensaje","El usuario no se pudo eliminar. "+ e.getMessage());
+            redirectAttributes.addFlashAttribute("mensajeEstilo", "alert-danger");
+        }
+        return "redirect:/admin/usuarios";
+    }
 }

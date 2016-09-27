@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head th:include="layouts/admin :: head('Editar Usuario', 'Editar Usuario')">
+    <head th:include="layouts/admin :: head('Nuevo Usuario', 'Nuevo Usuario')">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>Editar Usuario</title>
+        <title>Nuevo Usuario</title>
         <meta name="description" content="" th:content="${description}"/>
         <meta name="author" content="J. David Mendoza"/>
         <link rel="shortcut icon" href="../../static/favicon.ico" th:href="@{/favicon.ico}" />
@@ -37,7 +37,7 @@
 
         <div class="container">
 
-            <form action="#" th:action="@{/admin/usuarios/editar}" th:object="${perfil}" method="POST" enctype="multipart/form-data">
+            <form action="#" th:action="@{/admin/usuarios/nuevo}" th:object="${perfil}" method="POST" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id}" />
                 <input type="hidden" th:field="*{version}" />
                 <input type="hidden" th:field="*{usuario.id}" />
@@ -45,7 +45,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>Editar Usuario</h1>
+                        <h1>Nuevo Usuario</h1>
 
                         <div th:if="${mensaje != null}" class="alert" th:classappend="${mensajeEstilo != null} ? ${mensajeEstilo} : 'alert-success'" style="margin-top: 10px;">
                             <h2 th:text="${mensaje}">Mensaje</h2>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" th:classappend="${#fields.hasErrors('usuario.username')}?'has-error'">
-                            <label for="username">Usuario</label>
+                            <label for="username">Usuario / Correo Electrónico</label>
                             <input type="text" th:field="*{usuario.username}" id="username" class="form-control" />
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <img src="#" alt="#" th:src="@{'/perfil/imagen/'+${perfil.id}}" th:alt="${perfil.usuario.nombreCompleto}" style="height: 100px;"/>
+                        <img src="#" alt="#" th:if="${perfil.id}" th:src="@{'/perfil/imagen/'+${perfil.id}}" th:alt="${perfil.usuario.nombreCompleto}" style="height: 100px;"/>
                         <div class="form-group" th:classappend="${#fields.hasErrors('file')}?'has-error'">
                             <label for="file">Imagen</label>
                             <input type="file" th:field="*{file}" id="file" class="form-control" />
@@ -113,9 +113,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span> Actualizar</button>
+                        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span> Crear</button>
                         <a href="#" th:href="@{'/admin/usuarios'}" class="btn btn-default btn-lg"><span class="fa fa-undo"></span> Cancelar</a>
-                        <a href="#" th:href="@{'/admin/usuarios/eliminar/'+${perfil.id}}" class="btn btn-danger btn-lg pull-right"><span class="fa fa-trash-o"></span> Eliminar</a>
                     </div>
                 </div>
             </form>

@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import org.davidmendoza.esu.dao.PerfilRepository;
 import org.davidmendoza.esu.dao.RolRepository;
 import org.davidmendoza.esu.dao.UsuarioRepository;
@@ -119,5 +120,23 @@ public class PerfilService {
         }
         perfilRepository.save(perfil);
     }
-    
+
+    public void crea(Perfil perfil) {
+        Date date = new Date();
+        Usuario usuario = perfil.getUsuario();
+        usuario.setDateCreated(date);
+        usuario.setLastUpdated(date);
+        usuario.setPassword(UUID.randomUUID().toString());
+        usuario = usuarioRepository.save(usuario);
+        perfil.setUsuario(usuario);
+        perfilRepository.save(perfil);
+    }
+
+    public void elimina(Long perfilId) {
+        Perfil perfil = perfilRepository.findOne(perfilId);
+        Usuario usuario = perfil.getUsuario();
+        perfilRepository.delete(perfil);
+        usuarioRepository.delete(usuario);
+    }
+
 }
