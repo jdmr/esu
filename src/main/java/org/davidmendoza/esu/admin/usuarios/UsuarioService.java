@@ -27,6 +27,8 @@ import org.davidmendoza.esu.dao.PerfilRepository;
 import org.davidmendoza.esu.dao.UsuarioRepository;
 import org.davidmendoza.esu.shared.Perfil;
 import org.davidmendoza.esu.shared.Usuario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,6 +43,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UsuarioService {
 
+    private static final Logger log = LoggerFactory.getLogger(UsuarioService.class);
+    
     @Autowired
     UsuarioRepository repository;
     @Autowired
@@ -57,6 +61,20 @@ public class UsuarioService {
             }
         }
         return usuarios;
+    }
+
+    Usuario obtiene(Long usuarioId) {
+        return repository.findOne(usuarioId);
+    }
+
+    Perfil obtienePerfil(Long usuarioId) {
+        Usuario usuario = repository.getOne(usuarioId);
+        log.debug("Obteniendo perfil: {}", usuarioId);
+        Perfil perfil = perfilRepository.findByUsuario(usuario);
+        if (perfil == null) {
+            perfil = new Perfil();
+        }
+        return perfil;
     }
 
 }

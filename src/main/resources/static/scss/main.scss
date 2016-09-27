@@ -112,8 +112,13 @@ h6,.h6 { font-size: 1em; }
     .navbar > .container .navbar-brand,
     .navbar > .container-fluid .navbar-brand {
         margin: 0 0 0 -5px;
-        width: 100%;
     }
+}
+
+#login-anchor {
+    position: relative;
+    float: right;
+    margin-top: 8px;
 }
 
 .navbar-brand {
@@ -204,12 +209,6 @@ footer {
     }
 }
 
-.btn-cta {
-    font-size: 1.4em;
-    padding: 20px 0;
-    margin-bottom: 30px;
-}
-
 .articulo {
     height: 400px;
     margin-top: 50px;
@@ -226,3 +225,74 @@ footer {
         height: 50px;
     }
 }
+
+.btn-cta {
+    font-size: 1.4em;
+    padding: 20px 0;
+    margin-bottom: 30px;
+}
+
+@mixin button-variant($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:focus,
+  &.focus {
+    color: $color;
+    background-color: darken($background, 10%);
+        border-color: darken($border, 25%);
+  }
+  &:hover {
+    color: $color;
+    background-color: darken($background, 10%);
+        border-color: darken($border, 12%);
+  }
+  &:active,
+  &.active,
+  .open > &.dropdown-toggle {
+    color: $color;
+    background-color: darken($background, 10%);
+        border-color: darken($border, 12%);
+
+    &:hover,
+    &:focus,
+    &.focus {
+      color: $color;
+      background-color: darken($background, 17%);
+          border-color: darken($border, 25%);
+    }
+  }
+  &:active,
+  &.active,
+  .open > &.dropdown-toggle {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: $background;
+          border-color: $border;
+    }
+  }
+
+  .badge {
+    color: $background;
+    background-color: $color;
+  }
+}
+
+.btn-facebook {
+    @include button-variant(#fff, #3b5998, darken(#3b5998, 10%));
+}
+
+.btn-google {
+    @include button-variant(#fff, #4285F4, darken(#4285F4, 10%));
+}
+

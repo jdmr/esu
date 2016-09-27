@@ -23,11 +23,15 @@
  */
 package org.davidmendoza.esu.shared;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.davidmendoza.esu.dao.PerfilRepository;
+import org.davidmendoza.esu.dao.RolRepository;
+import org.davidmendoza.esu.dao.UsuarioRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +51,10 @@ public class PerfilService {
     private PerfilRepository perfilRepository;
     @Autowired
     private PublicacionService publicacionService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private RolRepository rolRepository;
 
     @Transactional(readOnly = true)
     public Perfil obtienePorUsuario(Usuario usuario) {
@@ -75,6 +83,41 @@ public class PerfilService {
             perfil.setPublicacionesUnicas(unicas);
         }
         return perfiles;
+    }
+
+    public void actualiza(Perfil perfil) {
+        Usuario usuario = perfil.getUsuario();
+        Usuario u = usuarioRepository.dateCreated(usuario.getId());
+        usuario.setDateCreated(u.getDateCreated());
+        usuario.setLastUpdated(new Date());
+
+        usuario.getRoles().clear();
+        if (usuario.getAdmin()) {
+            usuario.getRoles().add(rolRepository.findByAuthorityIgnoreCase("ROLE_ADMIN"));
+        }
+        if (usuario.getEditor()) {
+            usuario.getRoles().add(rolRepository.findByAuthorityIgnoreCase("ROLE_EDITOR"));
+        }
+        if (usuario.getAutor()) {
+            usuario.getRoles().add(rolRepository.findByAuthorityIgnoreCase("ROLE_AUTOR"));
+        }
+        if (usuario.getUser()) {
+            usuario.getRoles().add(rolRepository.findByAuthorityIgnoreCase("ROLE_USER"));
+        }
+
+        usuarioRepository.save(usuario);
+
+        if (perfil.getFile() != null) {
+            try {
+                perfil.setTamano(perfil.getFile().getSize());
+                perfil.setTipoContenido(perfil.getFile().getContentType());
+                perfil.setNombreImagen(perfil.getFile().getOriginalFilename());
+                perfil.setArchivo(perfil.getFile().getBytes());
+            } catch (IOException e) {
+                log.warn("No se pudo subir la imagen", e);
+            }
+        }
+        perfilRepository.save(perfil);
     }
     
 }

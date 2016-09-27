@@ -23,14 +23,24 @@
  */
 package org.davidmendoza.esu.admin.usuarios;
 
+import org.davidmendoza.esu.shared.Perfil;
+import org.davidmendoza.esu.shared.PerfilService;
+import org.davidmendoza.esu.shared.Usuario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -39,9 +49,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/admin/usuarios")
 public class UsuarioController {
+    private static final Logger log = LoggerFactory.getLogger(UsuarioController.class);
 
     @Autowired
     private UsuarioService service;
+    @Autowired
+    private PerfilValidator perfilValidator;
+    @Autowired
+    private PerfilService perfilService;
 
     @GetMapping
     public String lista(@RequestParam(required = false) Integer pagina, Model model) {
@@ -54,4 +69,32 @@ public class UsuarioController {
 
         return "admin/usuarios/lista";
     }
+
+    @GetMapping("/editar/{usuarioId}")
+    public String editar(@PathVariable Long usuarioId, Model model) {
+        model.addAttribute("perfil", service.obtienePerfil(usuarioId));
+
+        return "admin/usuarios/editar";
+    }
+    
+    @PostMapping(value = "/editar")
+    public String editar(@ModelAttribute("perfil") Perfil perfil, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        perfilValidator.validate(perfil, bindingResult);
+        if (bindingResult.hasErrors()) {
+            log.warn("No se pudo actualizar usuario. {}", bindingResult.getAllErrors());
+            return "admin/usuario/editar";
+        }
+        Usuario usuario = perfil.getUsuario();
+
+        try {
+            perfilService.actualiza(perfil);
+        } catch (Exception e) {
+            log.error("No se pudo actualizar usuario", e);
+            bindingResult.reject("No se pudo actualizar usuario. {}", e.getMessage());
+            return "admin/usuario/editar";
+        }
+        return "redirect:/admin/usuario/ver/" + usuario.getId();
+    }
+
+    
 }

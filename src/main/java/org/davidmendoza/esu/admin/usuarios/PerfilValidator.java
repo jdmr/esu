@@ -21,19 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.dao;
+package org.davidmendoza.esu.admin.usuarios;
 
-import org.davidmendoza.esu.shared.Rol;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.apache.commons.lang.StringUtils;
+import org.davidmendoza.esu.shared.Perfil;
+import org.davidmendoza.esu.shared.Usuario;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface RolRepository extends JpaRepository<Rol, Long> {
-    
-    public Rol findByAuthority(String authority);
-    
-    public Rol findByAuthorityIgnoreCase(String authority);
-    
+@Component
+public class PerfilValidator implements Validator {
+
+    @Override
+    public boolean supports(Class<?> type) {
+        return Perfil.class.isAssignableFrom(type);
+    }
+
+    @Override
+    public void validate(Object o, Errors errors) {
+        Perfil perfil = (Perfil) o;
+        Usuario usuario = perfil.getUsuario();
+        if (StringUtils.isBlank(usuario.getNombre())) {
+            errors.rejectValue("usuario.nombre", "NotBlank.usuario.nombre", "Nombre es un campo requerido");
+        }
+        if (StringUtils.isBlank(usuario.getApellido())) {
+            errors.rejectValue("usuario.apellido", "NotBlank.usuario.apellido", "Apellido es un campo requerido");
+        }
+        if (StringUtils.isBlank(usuario.getUsername())) {
+            errors.rejectValue("usuario.username", "NotBlank.usuario.username", "Usuario es un campo requerido");
+        }
+    }
+
 }

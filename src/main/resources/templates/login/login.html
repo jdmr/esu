@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head th:fragment='head(title, description)'>
+    <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title th:text="|${title} - ESU|">Main</title>
-        <meta name="description" content="" th:content="${description}"/>
+        <title>ESU</title>
+        <meta name="description" content="Escuela Sabática Universitaria" />
         <meta name="author" content="J. David Mendoza"/>
         <link rel="shortcut icon" href="../../static/favicon.ico" th:href="@{/favicon.ico}" />
         <link rel="apple-touch-icon" sizes="57x57" href="../../static/apple-touch-icon-57x57.png" th:href="@{/apple-touch-icon-57x57.png}" />
@@ -32,63 +32,15 @@
     </head>
     <body>
 
-        <header class="navbar navbar-default navbar-fixed-top" role="banner" th:fragment='navigation(activeMenu)'>
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only" th:text="toggle.navigation">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a id="login-anchor" href="#" th:href="@{/login}" class="btn btn-default"><span class="fa fa-sign-in"></span></a>
-                    <a id="mainLogo" href="#" th:href="@{/}" class="navbar-brand"><img src="../../static/images/logo.jpg" th:src="@{/images/logo.jpg}" alt="Escuela Sabática Universitaria" /></a>
-                </div>
-
-                <nav id="mainMenu" class="collapse navbar-collapse" role="navigation">
-                    <ul class="nav navbar-nav">
-                        <li th:class="${activeMenu} == 'inicio' ? 'active'"><a href="#" th:href="@{/}">Inicio</a></li>
-                        <li th:class="${activeMenu} == 'estudia' ? 'active'"><a href="#" th:href="@{/estudia}">Estudia</a></li>
-                        <li th:class="${activeMenu} == 'profundiza' ? 'active'"><a href="#" th:href="@{/profundiza}">Profundiza</a></li>
-                        <li th:class="${activeMenu} == 'comparte' ? 'active'"><a href="#" th:href="@{/comparte}">Comparte</a></li>
-                        <li th:class="${activeMenu} == 'conocenos' ? 'active'"><a href="#" th:href="@{/conocenos}">Conocenos</a></li>
-                        <li th:class="${activeMenu} == 'foro' ? 'active'"><a href="#" th:href="@{/foro}" target="_blank">Foro</a></li>
-                    </ul>
-                    <form action="#" th:action="@{/buscar}" method="GET" class="navbar-form navbar-right" name="searchForm" id="searchForm" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Buscar" id="filtro" name="filtro" />
-                        </div>
-                    </form>
-                </nav>
-            </div>
-        </header>
-
-        <div class="container">
-            <div class="row" id="searchDiv" th:fragment='searchDiv'>
-                <div class="col-sm-12">
-                    <form action='#' th:action='@{/buscar}' method='GET' role='search' name="buscarForm2" id='buscarForm2'>
-                        <input type="text" class="form-control" placeholder="Buscar" id="filtro2" name="filtro" />
-                    </form>
-                </div>
-            </div>
-
+        <div class="container" style="margin-bottom: 160px;">
             <div class="row">
-                <div class="col-md-3" th:fragment="sidebar(activeMenu)">
-                    <ul class="nav nav-pills nav-stacked" style="background-color: #dfdfdf">
-                        <li th:class="${activeMenu} == 'articulos' ? 'active'"><a href="#" th:href="@{/admin/articulo}">Artículos</a></li>
-                        <li th:class="${activeMenu} == 'trimestres' ? 'active'"><a href="#" th:href="@{/admin/trimestre}">Trimestres</a></li>
-                        <li th:class="${activeMenu} == 'usuarios' ? 'active'"><a href="#" th:href="@{/admin/usuario}">Usuarios</a></li>
-                        <li th:class="${activeMenu} == 'reportes' ? 'active'"><a href="#" th:href="@{/admin/reporte}">Reportes</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-9">
-                    <h1>Contenido</h1>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 th:text="#{welcome.label}">Welcome</h1>
+                <div class="col-md-4 col-md-offset-4">
+                    <img src="../../static/images/logo.jpg" th:src="@{/images/logo.jpg}" alt="Escuela Sabática Universitaria" />
+                    
+                    <div style="padding-top: 40px;">
+                        <a href="#" th:href="@{/login/facebook}" class="btn btn-facebook btn-cta btn-block"><span class="fa fa-facebook"></span></a>
+                        <a href="#" th:href="@{/login/google}" class="btn btn-google btn-cta btn-block"><span class="fa fa-google"></span></a>                        
+                    </div>
 
                 </div>
             </div>

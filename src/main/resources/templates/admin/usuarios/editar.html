@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:include="layouts/admin :: head('Editar Usuario', 'Editar Usuario')">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Editar Usuario</title>
+        <meta name="description" content="" th:content="${description}"/>
+        <meta name="author" content="J. David Mendoza"/>
+        <link rel="shortcut icon" href="../../static/favicon.ico" th:href="@{/favicon.ico}" />
+        <link rel="apple-touch-icon" sizes="57x57" href="../../static/apple-touch-icon-57x57.png" th:href="@{/apple-touch-icon-57x57.png}" />
+        <link rel="apple-touch-icon" sizes="114x114" href="../../static/apple-touch-icon-114x114.png" th:href="@{/apple-touch-icon-114x114.png}" />
+        <link rel="apple-touch-icon" sizes="72x72" href="../../static/apple-touch-icon-72x72.png" th:href="@{/apple-touch-icon-72x72.png}" />
+        <link rel="apple-touch-icon" sizes="144x144" href="../../static/apple-touch-icon-144x144.png" th:href="@{/apple-touch-icon-144x144.png}" />
+        <link rel="apple-touch-icon" sizes="60x60" href="../../static/apple-touch-icon-60x60.png" th:href="@{/apple-touch-icon-60x60.png}" />
+        <link rel="apple-touch-icon" sizes="120x120" href="../../static/apple-touch-icon-120x120.png" th:href="@{/apple-touch-icon-120x120.png}" />
+        <link rel="apple-touch-icon" sizes="76x76" href="../../static/apple-touch-icon-76x76.png" th:href="@{/apple-touch-icon-76x76.png}" />
+        <link rel="apple-touch-icon" sizes="152x152" href="../../static/apple-touch-icon-152x152.png" th:href="@{/apple-touch-icon-152x152.png}" />
+        <link rel="icon" type="image/png" href="../../static/favicon-196x196.png" sizes="196x196" th:href="@{/favicon-196x196.png}" />
+        <link rel="icon" type="image/png" href="../../static/favicon-160x160.png" sizes="160x160" th:href="@{/favicon-160x160.png}" />
+        <link rel="icon" type="image/png" href="../../static/favicon-96x96.png" sizes="96x96" th:href="@{/favicon-96x96.png}" />
+        <link rel="icon" type="image/png" href="../../static/favicon-16x16.png" sizes="16x16" th:href="@{/favicon-16x16.png}" />
+        <link rel="icon" type="image/png" href="../../static/favicon-32x32.png" sizes="32x32" th:href="@{/favicon-32x32.png}" />
+        <meta name="msapplication-TileColor" content="#67b6ea" />
+        <meta name="msapplication-TileImage" content="../../static/mstile-144x144.png" th:content="@{/mstile-144x144.png}" />
+        <meta name="msapplication-config" content="../../static/browserconfig.xml" th:content="@{/browserconfig.xml}" />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/b1086d89ce.css" />
+        <link rel="stylesheet" href="../../static/styles/main.css" th:href="@{/styles/main.css}" />
+
+    </head>
+    <body>
+
+        <header class="navbar navbar-inverse navbar-fixed-top" role="banner" th:replace="layouts/admin :: navigation('usuarios')">
+        </header>
+
+        <div class="container">
+
+            <form action="#" th:action="@{/admin/usuarios/editar}" th:object="${perfil}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{version}" />
+                <input type="hidden" th:field="*{usuario.id}" />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Editar Usuario</h1>
+
+                        <div th:if="${mensaje != null}" class="alert" th:classappend="${mensajeEstilo != null} ? ${mensajeEstilo} : 'alert-success'" style="margin-top: 10px;">
+                            <h2 th:text="${mensaje}">Mensaje</h2>
+                        </div>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                            <h4>Error</h4>
+                            <ul>
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Incorrect input</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('usuario.nombre')}?'has-error'">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" th:field="*{usuario.nombre}" id="nombre" class="form-control" autofocus="autofocus" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('usuario.apellido')}?'has-error'">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" th:field="*{usuario.apellido}" id="apellido" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('usuario.username')}?'has-error'">
+                            <label for="username">Usuario</label>
+                            <input type="text" th:field="*{usuario.username}" id="username" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="checkbox" th:classappend="${#fields.hasErrors('usuario.roles')}?'has-error'">
+                            <label>
+                                <input type="checkbox" th:field="*{usuario.admin}" id="admin" />
+                                ADMIN
+                            </label><br/>
+                            <label>
+                                <input type="checkbox" th:field="*{usuario.editor}" id="editor" />
+                                EDITOR
+                            </label><br/>
+                            <label>
+                                <input type="checkbox" th:field="*{usuario.autor}" id="autor" />
+                                AUTOR
+                            </label><br/>
+                            <label>
+                                <input type="checkbox" th:field="*{usuario.user}" id="usuario" />
+                                USUARIO
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('texto')}?'has-error'">
+                            <label for="texto">Descripci&oacute;n</label>
+                            <textarea th:field="*{texto}" id="texto" class="form-control" ></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="#" alt="#" th:src="@{'/perfil/imagen/'+${perfil.id}}" th:alt="${perfil.usuario.nombreCompleto}" style="height: 100px;"/>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('file')}?'has-error'">
+                            <label for="file">Imagen</label>
+                            <input type="file" th:field="*{file}" id="file" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span> Actualizar</button>
+                        <a href="#" th:href="@{'/admin/usuarios'}" class="btn btn-default btn-lg"><span class="fa fa-undo"></span> Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <footer role="contentinfo" th:replace="layouts/admin :: footer">
+        </footer>
+
+        <div th:replace="layouts/admin :: scripts" th:remove="tag">
+            <script src="../../static/scripts/vendor.js" th:src="@{/scripts/vendor.js}"></script>
+            <script src="../../static/scripts/plugins.js" th:src="@{/scripts/plugins.js}"></script>
+            <script src="../../static/scripts/main.js" th:src="@{/scripts/main.js}"></script>
+        </div>
+    </body>
+</html>
