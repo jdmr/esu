@@ -73,6 +73,7 @@ public class UsuarioService {
         Perfil perfil = perfilRepository.findByUsuario(usuario);
         if (perfil == null) {
             perfil = new Perfil();
+            perfil.setUsuario(usuario);
         }
         return perfil;
     }

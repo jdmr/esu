@@ -105,12 +105,12 @@ public class ProfundizaController {
         }
 
         Inicio hoy = inicioService.inicio(Calendar.getInstance());
-        if (inicio.getAnio().equals(hoy.getAnio())
+        if (hoy != null && inicio.getAnio().equals(hoy.getAnio())
                 && inicio.getTrimestre().equals(hoy.getTrimestre())
                 && inicio.getLeccion().equals(hoy.getLeccion())
                 && inicio.getDia().equals(hoy.getDia())) {
             inicio.setEsHoy(Boolean.TRUE);
-        } else {
+        } else if (hoy != null) {
             StringBuilder sb = new StringBuilder();
             sb.append("/estudia");
             sb.append("/").append(hoy.getAnio());

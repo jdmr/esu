@@ -1,0 +1,18 @@
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql:esu
+    username: jdmr
+    password: test
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  devtools:
+    livereload.enable: true
+
+logging:
+  level:
+    org.davidmendoza: debug
+#    org.springframework: debug
+    

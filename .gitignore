@@ -5,3 +5,5 @@ nb-configuration.xml
 application.yml
 .sass-cache
 /nbproject/
+esu.properties
+esu.script

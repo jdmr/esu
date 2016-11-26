@@ -88,7 +88,8 @@ public class PerfilService {
 
     public void actualiza(Perfil perfil) {
         Usuario usuario = perfil.getUsuario();
-        Usuario u = usuarioRepository.dateCreated(usuario.getId());
+        log.info("ID: {} : {}", perfil.getId(), usuario.getId());
+        Usuario u = usuarioRepository.findOne(usuario.getId());
         usuario.setDateCreated(u.getDateCreated());
         usuario.setLastUpdated(new Date());
 
