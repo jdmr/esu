@@ -51,17 +51,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/perfil")
 public class PerfilController {
-    
+
     private static final Logger log = LoggerFactory.getLogger(PerfilController.class);
     @Autowired
     private PerfilService perfilService;
     @Autowired
     private PublicacionService publicacionService;
-    
+
     @GetMapping(value = "/imagen/{perfilId}")
-    public void obtieneImagen(@PathVariable Long perfilId, HttpServletRequest request, HttpServletResponse response) {
+    public void obtieneImagen(@PathVariable String perfilId, HttpServletRequest request, HttpServletResponse response) {
         log.info("Imagen Perfil: {}", perfilId);
-        Perfil perfil = perfilService.obtiene(perfilId);
+        if (perfilId.equals("null")) {
+            try {
+                response.sendRedirect(request.getContextPath()
+                        + "/images/sin-foto.jpg");
+                return;
+            } catch (IOException e) {
+                log.error("No se pudo obtener la imagen", e);
+            }
+        }
+        Long id = Long.valueOf(perfilId);
+        Perfil perfil = perfilService.obtiene(id);
         if (perfil != null) {
             if (StringUtils.isNotBlank(perfil.getNombreImagen())) {
                 response.setContentType(perfil.getTipoContenido());
@@ -84,27 +94,27 @@ public class PerfilController {
             log.error("No se pudo obtener la imagen", e);
         }
     }
-    
+
     @GetMapping("/{perfilId}")
     public String perfil(@PathVariable Long perfilId, Model model) {
         log.info("Perfil: {}", perfilId);
         Perfil perfil = perfilService.obtiene(perfilId);
         if (perfil != null) {
             model.addAttribute("perfil", perfil);
-            
+
             Map<Long, Long> articulos = new HashMap<>();
             List<Publicacion> publicaciones = new ArrayList<>();
-            for(Publicacion publicacion : publicacionService.publicaciones(perfil.getUsuario())) {
+            for (Publicacion publicacion : publicacionService.publicaciones(perfil.getUsuario())) {
                 if (!articulos.containsKey(publicacion.getArticulo().getId())) {
                     articulos.put(publicacion.getArticulo().getId(), publicacion.getArticulo().getId());
                     publicaciones.add(publicacion);
                 }
             }
             model.addAttribute("publicaciones", publicaciones);
-            
+
             return "perfil/usuario";
         }
-        throw new RuntimeException("No se encontro el perfil "+ perfilId);
+        throw new RuntimeException("No se encontro el perfil " + perfilId);
     }
 
 }

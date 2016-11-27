@@ -28,6 +28,7 @@ import org.davidmendoza.esu.shared.Perfil;
 import org.davidmendoza.esu.shared.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -39,5 +40,8 @@ public interface PerfilRepository extends JpaRepository<Perfil, Long> {
     
     @Query("select p from #{#entityName} p order by p.usuario.nombre, p.usuario.apellido")
     public List<Perfil> todos();
+
+    @Query("select p from #{#entityName} p where (p.usuario.apellido like :filtro or p.usuario.nombre like :filtro) order by p.usuario.apellido, p.usuario.nombre")
+    public List<Perfil> buscar(@Param("filtro") String filtro);
     
 }

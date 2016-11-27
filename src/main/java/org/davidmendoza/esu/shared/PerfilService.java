@@ -140,4 +140,8 @@ public class PerfilService {
         usuarioRepository.delete(usuario);
     }
 
+    public List<Perfil> buscar(String filtro) {
+        return perfilRepository.buscar(filtro);
+    }
+
 }

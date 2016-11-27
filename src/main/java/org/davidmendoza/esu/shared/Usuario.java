@@ -60,6 +60,34 @@ import org.springframework.security.core.userdetails.UserDetails;
     @UniqueConstraint(columnNames = {"username"})})
 public class Usuario implements UserDetails {
 
+    /**
+     * @return the perfilTexto
+     */
+    public String getPerfilTexto() {
+        return perfilTexto;
+    }
+
+    /**
+     * @param perfilTexto the perfilTexto to set
+     */
+    public void setPerfilTexto(String perfilTexto) {
+        this.perfilTexto = perfilTexto;
+    }
+
+    /**
+     * @return the perfilId
+     */
+    public Long getPerfilId() {
+        return perfilId;
+    }
+
+    /**
+     * @param perfilId the perfilId to set
+     */
+    public void setPerfilId(Long perfilId) {
+        this.perfilId = perfilId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -135,7 +163,6 @@ public class Usuario implements UserDetails {
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "username", nullable = false, length = 255)
-    @JsonIgnore
     private String username;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuarios_roles", joinColumns = {
@@ -158,6 +185,8 @@ public class Usuario implements UserDetails {
     @Transient
     @JsonIgnore
     private Perfil perfil;
+    private Long perfilId;
+    private String perfilTexto;
 
     public Usuario() {
     }
@@ -170,7 +199,7 @@ public class Usuario implements UserDetails {
         this.password = password;
         this.dateCreated = dateCreated;
     }
-    
+
     public Usuario(String nombre, String apellido) {
         this.nombre = nombre;
         this.apellido = apellido;

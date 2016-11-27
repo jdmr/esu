@@ -26,8 +26,10 @@
         <meta name="msapplication-config" content="../../static/browserconfig.xml" th:content="@{/browserconfig.xml}" />
 
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/b1086d89ce.css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="//use.fontawesome.com/b1086d89ce.css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css" />
         <link rel="stylesheet" href="../../static/styles/main.css" th:href="@{/styles/main.css}" />
 
     </head>
@@ -132,6 +134,7 @@
             </script>
             <script type="text/javascript" src="//code.jquery.com/jquery-3.1.0.min.js"></script>
             <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js" th:src="@{/scripts/select2.full.min.js}"></script>"></script>
         </div>
     </body>
 </html>

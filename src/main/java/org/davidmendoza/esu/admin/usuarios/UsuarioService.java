@@ -23,6 +23,7 @@
  */
 package org.davidmendoza.esu.admin.usuarios;
 
+import java.util.List;
 import org.davidmendoza.esu.dao.PerfilRepository;
 import org.davidmendoza.esu.dao.UsuarioRepository;
 import org.davidmendoza.esu.shared.Perfil;
@@ -44,7 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsuarioService {
 
     private static final Logger log = LoggerFactory.getLogger(UsuarioService.class);
-    
+
     @Autowired
     UsuarioRepository repository;
     @Autowired
@@ -76,6 +77,21 @@ public class UsuarioService {
             perfil.setUsuario(usuario);
         }
         return perfil;
+    }
+
+    List<Usuario> buscar(String filtro) {
+        filtro = "%" + filtro.toUpperCase() + "%";
+        List<Usuario> usuarios = repository.busca(filtro);
+        log.debug("Usuarios: {}", usuarios);
+        for (Usuario usuario : usuarios) {
+            Perfil perfil = perfilRepository.findByUsuario(usuario);
+            if (perfil != null) {
+                usuario.setPerfilId(perfil.getId());
+                usuario.setPerfilTexto(perfil.getTexto());
+            }
+        }
+        log.debug("Usuarios (B): {} ", usuarios);
+        return usuarios;
     }
 
 }

@@ -39,10 +39,12 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Artículos</h1>
-                    
+                    <h1>Usuarios</h1>
+
                     <a href="#" th:href="@{/admin/usuarios/nuevo}" class="btn btn-primary btn-lg"><span class="fa fa-plus"></span> Usuario</a>
-                    
+
+                    <input type="text" name="buscarUsuarios" id="buscarUsuarios" placeholder="Buscar por nombre o apellido" class="form-control input-lg" style="display: inline;width:50%;"/>
+
                     <div th:if="${mensaje != null}" class="alert" th:classappend="${mensajeEstilo != null} ? ${mensajeEstilo} : 'alert-success'" style="margin-top: 10px;">
                         <h2 th:text="${mensaje}">Mensaje</h2>
                     </div>
@@ -59,7 +61,7 @@
                                     <th>Roles</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="usuarios-tbody">
                                 <tr th:each="usuario : ${usuarios}">
                                     <td>
                                         <a href="#" th:href="@{'/admin/usuarios/editar/'+${usuario.id}}">
@@ -96,5 +98,46 @@
             <script src="../../static/scripts/plugins.js" th:src="@{/scripts/plugins.js}"></script>
             <script src="../../static/scripts/main.js" th:src="@{/scripts/main.js}"></script>
         </div>
+        <script>
+            'use strict';
+            $(function () {
+                $('input#buscarUsuarios').keypress(function () {
+                    var filtro = $(this).val();
+                    if (filtro.length > 2) {
+                        $.get("/admin/usuarios/buscar/" + filtro)
+                                .done(function (data) {
+                                    var html = '';
+                                    $.each(data, function (i, usuario) {
+                                        html += '<tr>';
+                                        html += '<td>';
+                                        html += '<a href="/admin/usuarios/editar/' + usuario.id + '"><img alt="' + usuario.nombre + '" src="/perfil/imagen/' + usuario.perfilId + '" style="height:100px;"/></a>';
+                                        html += '</td>';
+                                        html += '<td>';
+                                        html += '<a href="/admin/usuarios/editar/' + usuario.id + '">' + usuario.apellido + '</a>';
+                                        html += '</td>';
+                                        html += '<td>' + usuario.nombre + '</td>';
+                                        html += '<td>' + usuario.username + '</td>';
+                                        html += '<td>' + usuario.perfilTexto + '</td>';
+                                        html += '<td>';
+                                        html += '<ul>';
+                                        $.each(usuario.roles, function (j, k) {
+                                            html += "<li>" + k.authority + "</li>";
+                                        });
+                                        html += '</ul>';
+                                        html += '</td>';
+                                        html += '</tr>';
+                                    });
+
+                                    console.log('HTML: ' + html);
+
+                                    $('#usuarios-tbody').html(html);
+                                })
+                                .fail(function (err) {
+                                    console.error("No se pudo buscar usuarios", err);
+                                });
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
