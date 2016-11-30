@@ -65,17 +65,16 @@ public class PerfilControllerTest {
     
     @Test
     public void shouldShowImagen() throws Exception {
-        mvc.perform(get("/perfil/imagen/14"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("image/jpeg"));
+        mvc.perform(get("/perfil/imagen/26"))
+                .andExpect(status().is3xxRedirection());
     }
     
     @Test
     public void shouldShowPerfil() throws Exception {
-        mvc.perform(get("/perfil/14"))
+        mvc.perform(get("/perfil/26"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("perfil"))
-                .andExpect(content().string(containsString("<title>Conócenos: Juan José Andrade - ESU</title>")))
+                .andExpect(content().string(containsString("<title>Conócenos: Jair Arody del Valle - ESU</title>")))
                 .andDo(print());
     }
     

@@ -185,7 +185,9 @@ public class Usuario implements UserDetails {
     @Transient
     @JsonIgnore
     private Perfil perfil;
+    @Transient
     private Long perfilId;
+    @Transient
     private String perfilTexto;
 
     public Usuario() {

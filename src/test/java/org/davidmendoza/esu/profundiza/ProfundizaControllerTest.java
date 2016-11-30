@@ -62,7 +62,8 @@ public class ProfundizaControllerTest {
     @Test
     public void shouldRedirectToProfundiza() throws Exception {
         mvc.perform(get("/profundiza"))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is3xxRedirection())
+                .andDo(print());
     }
     
     @Test
