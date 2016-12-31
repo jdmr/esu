@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 J. David Mendoza.
+ * Copyright 2016 Universidad de Montemorelos.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.dao;
+package org.davidmendoza.esu.perfil;
 
 import java.util.List;
-import org.davidmendoza.esu.shared.Usuario;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.davidmendoza.esu.admin.usuarios.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -35,16 +33,14 @@ import org.springframework.data.repository.query.Param;
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface PerfilRepository extends JpaRepository<Perfil, Long> {
+    
+    public Perfil findByUsuario(Usuario usuario);
+    
+    @Query("select p from #{#entityName} p order by p.usuario.nombre, p.usuario.apellido")
+    public List<Perfil> todos();
 
-    public Usuario findByUsernameIgnoreCase(String username);
-    
-    public Page<Usuario> findByUsernameLikeOrNombreLikeOrApellidoLikeAllIgnoreCase(String username, String nombre, String apellido, Pageable pageable);
-    
-    @Query("select u from Usuario u where upper(u.nombre) like :filtro or upper(u.apellido) like :filtro order by u.nombre, u.apellido")
-    public List<Usuario> busca(@Param("filtro")String filtro);
-    
-    @Query("select new Usuario( u.password, u.dateCreated ) from Usuario u where u.id = :usuarioId")
-    public Usuario dateCreated(@Param("usuarioId") Long usuarioId);
+    @Query("select p from #{#entityName} p where (p.usuario.apellido like :filtro or p.usuario.nombre like :filtro) order by p.usuario.apellido, p.usuario.nombre")
+    public List<Perfil> buscar(@Param("filtro") String filtro);
     
 }

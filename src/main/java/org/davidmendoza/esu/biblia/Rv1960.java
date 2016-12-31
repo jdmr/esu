@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.biblia;
 
+import org.davidmendoza.esu.biblia.Libro;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -39,8 +40,8 @@ import javax.validation.constraints.Size;
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
 @Entity
-@Table(name = "rv1995")
-public class Rv1995 implements Serializable {
+@Table(name = "rv1960")
+public class Rv1960 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -64,14 +65,14 @@ public class Rv1995 implements Serializable {
     @ManyToOne
     private Libro libro;
 
-    public Rv1995() {
+    public Rv1960() {
     }
 
-    public Rv1995(Long id) {
+    public Rv1960(Long id) {
         this.id = id;
     }
 
-    public Rv1995(Long id, int capitulo, int versiculo, String texto) {
+    public Rv1960(Long id, int capitulo, int versiculo, String texto) {
         this.id = id;
         this.capitulo = capitulo;
         this.versiculo = versiculo;
@@ -128,10 +129,10 @@ public class Rv1995 implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rv1995)) {
+        if (!(object instanceof Rv1960)) {
             return false;
         }
-        Rv1995 other = (Rv1995) object;
+        Rv1960 other = (Rv1960) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -140,7 +141,7 @@ public class Rv1995 implements Serializable {
 
     @Override
     public String toString() {
-        return "org.davidmendoza.esu.model.Rv1995[ id=" + id + " ]";
+        return "org.davidmendoza.esu.model.Rv1960[ id=" + id + " ]";
     }
     
 }

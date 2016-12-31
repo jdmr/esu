@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.biblia;
 
 import java.io.Serializable;
 import java.util.List;

@@ -24,7 +24,6 @@
 package org.davidmendoza.esu.inicio;
 
 import java.util.TimeZone;
-import org.davidmendoza.esu.shared.Inicio;
 import org.davidmendoza.esu.inicio.InicioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

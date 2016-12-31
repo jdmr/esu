@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 Universidad de Montemorelos.
+ * Copyright 2016 Southwestern Adventist University.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.dao;
+package org.davidmendoza.esu.admin.articulos;
 
-import org.davidmendoza.esu.shared.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface RolRepository extends JpaRepository<Rol, Long> {
-    
-    public Rol findByAuthority(String authority);
-    
-    public Rol findByAuthorityIgnoreCase(String authority);
+public interface ArticuloRepository extends JpaRepository<Articulo, Long> {
+
+    @Query("select a.vistas from Articulo a where a.id = :articuloId")
+    public Integer vistas(@Param("articuloId") Long articuloId);
+
+    @Modifying
+    @Query("update Articulo a set a.vistas = :vistas where a.id = :articuloId")
+    public int agregarVista(@Param("vistas") Integer vistas, @Param("articuloId") Long articuloId);
     
 }

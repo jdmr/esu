@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.perfil;
 
+import org.davidmendoza.esu.admin.articulos.PublicacionService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,9 +31,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import org.davidmendoza.esu.dao.PerfilRepository;
-import org.davidmendoza.esu.dao.RolRepository;
-import org.davidmendoza.esu.dao.UsuarioRepository;
+import org.davidmendoza.esu.perfil.PerfilRepository;
+import org.davidmendoza.esu.admin.usuarios.RolRepository;
+import org.davidmendoza.esu.admin.usuarios.UsuarioRepository;
+import org.davidmendoza.esu.admin.articulos.Publicacion;
+import org.davidmendoza.esu.admin.usuarios.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

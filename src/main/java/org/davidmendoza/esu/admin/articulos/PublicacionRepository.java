@@ -21,25 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.dao;
+package org.davidmendoza.esu.admin.articulos;
 
-import org.davidmendoza.esu.shared.Articulo;
+import java.util.Collection;
+import java.util.List;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface ArticuloRepository extends JpaRepository<Articulo, Long> {
+public interface PublicacionRepository extends JpaRepository<Publicacion, Long> {
 
-    @Query("select a.vistas from Articulo a where a.id = :articuloId")
-    public Integer vistas(@Param("articuloId") Long articuloId);
+    public List<Publicacion> findByAnioAndTrimestreAndLeccionAndDiaAndTipoAndEstatus(Integer anio, String trimestre, String leccion, String dia, String tipo, String estatus);
 
-    @Modifying
-    @Query("update Articulo a set a.vistas = :vistas where a.id = :articuloId")
-    public int agregarVista(@Param("vistas") Integer vistas, @Param("articuloId") Long articuloId);
+    public List<Publicacion> findByAnioAndTrimestreAndLeccionAndTipoAndEstatus(Integer anio, String trimestre, String leccion, String tipo, String estatus);
+
+    public List<Publicacion> findByEstatusAndArticuloAutorIdOrderByDateCreated(String estatus, Long articuloAutorId);
+
+    public List<Publicacion> findByEstatusAndArticuloAutorIdAndTipoInOrderByDateCreated(String estatus, Long articuloAutorId, Collection<String> tipos);
     
+    public List<Publicacion> findByEstatusAndArticuloId(String estatus, Long articuloId, Pageable pgbl);
+
 }

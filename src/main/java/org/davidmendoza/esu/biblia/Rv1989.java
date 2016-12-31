@@ -21,78 +21,64 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.biblia;
 
+import org.davidmendoza.esu.biblia.Libro;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
 @Entity
-@Table(name = "vistas")
-public class Vista implements Serializable {
+@Table(name = "rv1989")
+public class Rv1989 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id", nullable = false)
     private Long id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "version", nullable = false)
-    private long version;
+    @Column(name = "capitulo", nullable = false)
+    private int capitulo;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "cantidad", nullable = false)
-    private int cantidad;
+    @Column(name = "versiculo", nullable = false)
+    private int versiculo;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecha", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha;
-    @JoinColumn(name = "articulo_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private Articulo articulo;
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "texto", nullable = false, length = 2147483647)
+    private String texto;
+    @JoinColumn(name = "libro_id", referencedColumnName = "id")
+    @ManyToOne
+    private Libro libro;
 
-    public Vista() {
+    public Rv1989() {
     }
 
-    public Vista(Long id) {
+    public Rv1989(Long id) {
         this.id = id;
     }
 
-    public Vista(Long id, long version, int cantidad, Date fecha) {
+    public Rv1989(Long id, int capitulo, int versiculo, String texto) {
         this.id = id;
-        this.version = version;
-        this.cantidad = cantidad;
-        this.fecha = fecha;
+        this.capitulo = capitulo;
+        this.versiculo = versiculo;
+        this.texto = texto;
     }
-    
-    public Vista(int cantidad, Date fecha, Articulo articulo) {
-        this.cantidad = cantidad;
-        this.fecha = fecha;
-        this.articulo = articulo;
-    }
-    
-    public Vista(int cantidad, Long articuloId) {
-        this.cantidad = cantidad;
-        this.articulo = new Articulo(articuloId);
-    }
-    
+
     public Long getId() {
         return id;
     }
@@ -101,36 +87,36 @@ public class Vista implements Serializable {
         this.id = id;
     }
 
-    public long getVersion() {
-        return version;
+    public int getCapitulo() {
+        return capitulo;
     }
 
-    public void setVersion(long version) {
-        this.version = version;
+    public void setCapitulo(int capitulo) {
+        this.capitulo = capitulo;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getVersiculo() {
+        return versiculo;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setVersiculo(int versiculo) {
+        this.versiculo = versiculo;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getTexto() {
+        return texto;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setTexto(String texto) {
+        this.texto = texto;
     }
 
-    public Articulo getArticulo() {
-        return articulo;
+    public Libro getLibro() {
+        return libro;
     }
 
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
 
     @Override
@@ -143,10 +129,10 @@ public class Vista implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Vista)) {
+        if (!(object instanceof Rv1989)) {
             return false;
         }
-        Vista other = (Vista) object;
+        Rv1989 other = (Rv1989) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -155,7 +141,7 @@ public class Vista implements Serializable {
 
     @Override
     public String toString() {
-        return "Vista{" + "cantidad=" + cantidad + ", fecha=" + fecha + ", articulo=" + articulo + '}';
+        return "org.davidmendoza.esu.model.Rv1989[ id=" + id + " ]";
     }
-
+    
 }

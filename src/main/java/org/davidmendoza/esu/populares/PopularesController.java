@@ -24,8 +24,8 @@
 package org.davidmendoza.esu.populares;
 
 import java.util.List;
-import org.davidmendoza.esu.shared.Publicacion;
-import org.davidmendoza.esu.shared.PublicacionService;
+import org.davidmendoza.esu.admin.articulos.Publicacion;
+import org.davidmendoza.esu.admin.articulos.PublicacionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

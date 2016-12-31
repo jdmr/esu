@@ -24,7 +24,6 @@
 package org.davidmendoza.esu.inicio;
 
 import java.util.TimeZone;
-import org.davidmendoza.esu.shared.Inicio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

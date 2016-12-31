@@ -21,14 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.admin.articulos;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
-import org.davidmendoza.esu.dao.ArticuloRepository;
-import org.davidmendoza.esu.dao.PopularRepository;
-import org.davidmendoza.esu.dao.PublicacionRepository;
+import org.davidmendoza.esu.admin.articulos.ArticuloRepository;
+import org.davidmendoza.esu.populares.PopularRepository;
+import org.davidmendoza.esu.admin.articulos.PublicacionRepository;
+import org.davidmendoza.esu.populares.Popular;
+import org.davidmendoza.esu.admin.usuarios.Usuario;
 import org.jsoup.Jsoup;
 import org.jsoup.examples.HtmlToPlainText;
 import org.slf4j.Logger;

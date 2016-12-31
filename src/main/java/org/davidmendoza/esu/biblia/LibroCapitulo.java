@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.biblia;
 
+import org.davidmendoza.esu.biblia.Libro;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -32,82 +33,67 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
 @Entity
-@Table(name = "rv1865")
-public class Rv1865 implements Serializable {
+@Table(name = "libros_capitulos")
+public class LibroCapitulo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Column(name = "capitulo", nullable = false)
-    private int capitulo;
+    private short capitulo;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "versiculo", nullable = false)
-    private int versiculo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "texto", nullable = false, length = 2147483647)
-    private String texto;
+    @Column(name = "versiculos", nullable = false)
+    private short versiculos;
     @JoinColumn(name = "libro_id", referencedColumnName = "id")
     @ManyToOne
     private Libro libro;
 
-    public Rv1865() {
+    public LibroCapitulo() {
     }
 
-    public Rv1865(Long id) {
+    public LibroCapitulo(Integer id) {
         this.id = id;
     }
 
-    public Rv1865(Long id, int capitulo, int versiculo, String texto) {
+    public LibroCapitulo(Integer id, short capitulo, short versiculos) {
         this.id = id;
         this.capitulo = capitulo;
-        this.versiculo = versiculo;
-        this.texto = texto;
+        this.versiculos = versiculos;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getCapitulo() {
+    public short getCapitulo() {
         return capitulo;
     }
 
-    public void setCapitulo(int capitulo) {
+    public void setCapitulo(short capitulo) {
         this.capitulo = capitulo;
     }
 
-    public int getVersiculo() {
-        return versiculo;
+    public short getVersiculos() {
+        return versiculos;
     }
 
-    public void setVersiculo(int versiculo) {
-        this.versiculo = versiculo;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setVersiculos(short versiculos) {
+        this.versiculos = versiculos;
     }
 
     public Libro getLibro() {
@@ -128,10 +114,10 @@ public class Rv1865 implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rv1865)) {
+        if (!(object instanceof LibroCapitulo)) {
             return false;
         }
-        Rv1865 other = (Rv1865) object;
+        LibroCapitulo other = (LibroCapitulo) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -140,7 +126,7 @@ public class Rv1865 implements Serializable {
 
     @Override
     public String toString() {
-        return "org.davidmendoza.esu.model.Rv1865[ id=" + id + " ]";
+        return "org.davidmendoza.esu.model.LibroCapitulo[ id=" + id + " ]";
     }
     
 }

@@ -21,30 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.admin.trimestres;
 
-import java.io.Serializable;
+import org.davidmendoza.esu.admin.articulos.Publicacion;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
 @Entity
-@Table(name = "roles", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"authority"})})
-public class Rol implements Serializable, GrantedAuthority {
-    private static final long serialVersionUID = 1L;
+@Table(name = "trimestres")
+public class Trimestre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -56,21 +59,42 @@ public class Rol implements Serializable, GrantedAuthority {
     private long version;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "authority", nullable = false, length = 255)
-    private String authority;
+    @Column(name = "inicia", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date inicia;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
+    @Column(name = "nombre", nullable = false, length = 6)
+    private String nombre;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "publicado", nullable = false)
+    private Boolean publicado;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "termina", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date termina;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "padre")
+    private List<Publicacion> publicaciones;
 
-    public Rol() {
+    public Trimestre() {
     }
 
-    public Rol(Long id) {
+    public Trimestre(Long id) {
         this.id = id;
     }
 
-    public Rol(Long id, long version, String authority) {
+    public Trimestre(Long id, long version, Date inicia, String nombre, boolean publicado, Date termina) {
         this.id = id;
         this.version = version;
-        this.authority = authority;
+        this.inicia = inicia;
+        this.nombre = nombre;
+        this.publicado = publicado;
+        this.termina = termina;
     }
 
     public Long getId() {
@@ -89,12 +113,44 @@ public class Rol implements Serializable, GrantedAuthority {
         this.version = version;
     }
 
-    public String getAuthority() {
-        return authority;
+    public Date getInicia() {
+        return inicia;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setInicia(Date inicia) {
+        this.inicia = inicia;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Boolean getPublicado() {
+        return publicado;
+    }
+
+    public void setPublicado(Boolean publicado) {
+        this.publicado = publicado;
+    }
+
+    public Date getTermina() {
+        return termina;
+    }
+
+    public void setTermina(Date termina) {
+        this.termina = termina;
+    }
+
+    public List<Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+
+    public void setPublicaciones(List<Publicacion> publicaciones) {
+        this.publicaciones = publicaciones;
     }
 
     @Override
@@ -107,16 +163,16 @@ public class Rol implements Serializable, GrantedAuthority {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rol)) {
+        if (!(object instanceof Trimestre)) {
             return false;
         }
-        Rol other = (Rol) object;
+        Trimestre other = (Trimestre) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "org.davidmendoza.esu.model.Rol[ authority=" + authority + " ]";
+        return "org.davidmendoza.esu.model.Trimestre[ id=" + id + " ]";
     }
     
 }

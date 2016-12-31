@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.admin.trimestres;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import org.davidmendoza.esu.dao.TrimestreRepository;
+import org.davidmendoza.esu.admin.trimestres.TrimestreRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

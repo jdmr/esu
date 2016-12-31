@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 Southwestern Adventist University.
+ * Copyright 2016 J. David Mendoza.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,28 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.dao;
+package org.davidmendoza.esu.biblia;
 
-import java.util.Collection;
 import java.util.List;
-import org.davidmendoza.esu.shared.Publicacion;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface PublicacionRepository extends JpaRepository<Publicacion, Long> {
+public interface BibliaRepository extends JpaRepository<Rv2000, Long> {
 
-    public List<Publicacion> findByAnioAndTrimestreAndLeccionAndDiaAndTipoAndEstatus(Integer anio, String trimestre, String leccion, String dia, String tipo, String estatus);
+    @Query("select v.id from Rv2000 v where v.libro.id = :libro and v.capitulo = :capitulo and v.versiculo = :versiculo")
+    public Long getVersiculoId(@Param("libro") Integer libro, @Param("capitulo") Integer capitulo, @Param("versiculo") Integer versiculo);
 
-    public List<Publicacion> findByAnioAndTrimestreAndLeccionAndTipoAndEstatus(Integer anio, String trimestre, String leccion, String tipo, String estatus);
-
-    public List<Publicacion> findByEstatusAndArticuloAutorIdOrderByDateCreated(String estatus, Long articuloAutorId);
-
-    public List<Publicacion> findByEstatusAndArticuloAutorIdAndTipoInOrderByDateCreated(String estatus, Long articuloAutorId, Collection<String> tipos);
-    
-    public List<Publicacion> findByEstatusAndArticuloId(String estatus, Long articuloId, Pageable pgbl);
+    @Query("select v from Rv2000 v where v.id between :inicio and :fin order by v.id")
+    public List<Rv2000> getVersiculos(@Param("inicio") Long inicio, @Param("fin") Long fin);
 
 }

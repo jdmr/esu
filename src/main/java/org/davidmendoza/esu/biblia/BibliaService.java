@@ -24,8 +24,6 @@
 package org.davidmendoza.esu.biblia;
 
 import java.util.List;
-import org.davidmendoza.esu.dao.BibliaRepository;
-import org.davidmendoza.esu.shared.Rv2000;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

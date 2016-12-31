@@ -24,8 +24,6 @@
 package org.davidmendoza.esu.admin.trimestres;
 
 import javax.validation.Valid;
-import org.davidmendoza.esu.shared.Trimestre;
-import org.davidmendoza.esu.shared.TrimestreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

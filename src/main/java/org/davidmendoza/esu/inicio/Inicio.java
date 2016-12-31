@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.inicio;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import org.apache.commons.lang.StringUtils;
+import org.davidmendoza.esu.admin.articulos.Publicacion;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**

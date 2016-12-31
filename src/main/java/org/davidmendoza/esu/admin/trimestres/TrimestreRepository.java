@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 J. David Mendoza.
+ * Copyright 2016 Southwestern Adventist University.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,60 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.shared;
+package org.davidmendoza.esu.admin.trimestres;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import java.util.Date;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-@Entity
-@Table(name = "populares")
-public class Popular implements Serializable {
+public interface TrimestreRepository extends JpaRepository<Trimestre, Long> {
 
-    @Id
-    private Integer id;
-    @OneToOne(optional = false)
-    private Publicacion publicacion;
+    @Query("SELECT t FROM Trimestre t WHERE :fecha BETWEEN t.inicia AND t.termina AND t.publicado = true")
+    public Trimestre obtiene(@Param("fecha") Date fecha);
 
-    public Popular() {
-    }
+    @Query("select t from Trimestre t where nombre = :nombre")
+    public Trimestre buscaPorNombre(@Param("nombre") String nombre);
 
-    public Popular(Integer id, Publicacion publicacion) {
-        this.id = id;
-        this.publicacion = publicacion;
-    }
-
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the publicacion
-     */
-    public Publicacion getPublicacion() {
-        return publicacion;
-    }
-
-    /**
-     * @param publicacion the publicacion to set
-     */
-    public void setPublicacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
-    }
 }

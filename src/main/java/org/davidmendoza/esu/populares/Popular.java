@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 Universidad de Montemorelos.
+ * Copyright 2016 J. David Mendoza.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,27 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.dao;
+package org.davidmendoza.esu.populares;
 
-import java.util.List;
-import org.davidmendoza.esu.shared.Perfil;
-import org.davidmendoza.esu.shared.Usuario;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import org.davidmendoza.esu.admin.articulos.Publicacion;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface PerfilRepository extends JpaRepository<Perfil, Long> {
-    
-    public Perfil findByUsuario(Usuario usuario);
-    
-    @Query("select p from #{#entityName} p order by p.usuario.nombre, p.usuario.apellido")
-    public List<Perfil> todos();
+@Entity
+@Table(name = "populares")
+public class Popular implements Serializable {
 
-    @Query("select p from #{#entityName} p where (p.usuario.apellido like :filtro or p.usuario.nombre like :filtro) order by p.usuario.apellido, p.usuario.nombre")
-    public List<Perfil> buscar(@Param("filtro") String filtro);
-    
+    @Id
+    private Integer id;
+    @OneToOne(optional = false)
+    private Publicacion publicacion;
+
+    public Popular() {
+    }
+
+    public Popular(Integer id, Publicacion publicacion) {
+        this.id = id;
+        this.publicacion = publicacion;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the publicacion
+     */
+    public Publicacion getPublicacion() {
+        return publicacion;
+    }
+
+    /**
+     * @param publicacion the publicacion to set
+     */
+    public void setPublicacion(Publicacion publicacion) {
+        this.publicacion = publicacion;
+    }
 }

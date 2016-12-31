@@ -24,8 +24,7 @@
 package org.davidmendoza.esu.admin.usuarios;
 
 import org.apache.commons.lang.StringUtils;
-import org.davidmendoza.esu.shared.Perfil;
-import org.davidmendoza.esu.shared.Usuario;
+import org.davidmendoza.esu.perfil.Perfil;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

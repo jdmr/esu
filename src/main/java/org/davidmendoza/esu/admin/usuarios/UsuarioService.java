@@ -24,10 +24,8 @@
 package org.davidmendoza.esu.admin.usuarios;
 
 import java.util.List;
-import org.davidmendoza.esu.dao.PerfilRepository;
-import org.davidmendoza.esu.dao.UsuarioRepository;
-import org.davidmendoza.esu.shared.Perfil;
-import org.davidmendoza.esu.shared.Usuario;
+import org.davidmendoza.esu.perfil.PerfilRepository;
+import org.davidmendoza.esu.perfil.Perfil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

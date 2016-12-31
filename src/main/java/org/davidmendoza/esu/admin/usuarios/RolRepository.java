@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 Southwestern Adventist University.
+ * Copyright 2016 Universidad de Montemorelos.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,24 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.davidmendoza.esu.dao;
+package org.davidmendoza.esu.admin.usuarios;
 
-import java.util.Date;
-import org.davidmendoza.esu.shared.Trimestre;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@swau.edu>
  */
-public interface TrimestreRepository extends JpaRepository<Trimestre, Long> {
-
-    @Query("SELECT t FROM Trimestre t WHERE :fecha BETWEEN t.inicia AND t.termina AND t.publicado = true")
-    public Trimestre obtiene(@Param("fecha") Date fecha);
-
-    @Query("select t from Trimestre t where nombre = :nombre")
-    public Trimestre buscaPorNombre(@Param("nombre") String nombre);
-
+public interface RolRepository extends JpaRepository<Rol, Long> {
+    
+    public Rol findByAuthority(String authority);
+    
+    public Rol findByAuthorityIgnoreCase(String authority);
+    
 }

@@ -25,10 +25,6 @@ package org.davidmendoza.esu.admin.articulos;
 
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
-import org.davidmendoza.esu.dao.ArticuloRepository;
-import org.davidmendoza.esu.dao.PublicacionRepository;
-import org.davidmendoza.esu.shared.Articulo;
-import org.davidmendoza.esu.shared.Publicacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
